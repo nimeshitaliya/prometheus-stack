@@ -2,9 +2,6 @@ namespace: monitoring
 serviceAccountName: prometheus-prometheus-oper-prometheus
 secret_config_filename: thanos-storage-config.yaml
 secret_config_name: thanos-storage-config
-bucket: "ivari-valero-testing01"
-endpoint: "s3.ca-central-1.amazonaws.com"
-region: "ca-central-1"
 
 ingressname: "private-ingress-thanos"
 groupname: "ivari-ingress-devops"
