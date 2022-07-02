@@ -9,7 +9,7 @@ metadata:
   name: thanos-query2
   namespace: {{ .Values.namespace }}
 spec:
-  type: LoadBalancer  
+  type: NodePort  
   ports:
   - name: http
     port: 9090
