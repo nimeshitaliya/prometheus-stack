@@ -1792,10 +1792,10 @@ prometheus:
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
   ##
   serviceAccount:
-    create: true
+    create: false
     name: "prometheus-prometheus-oper-prometheus"
-    annotations: 
-      eks.amazonaws.com/role-arn: arn:aws:iam::683994254048:role/ivari-sandbox-eks-thanos    
+    # annotations: 
+    #   eks.amazonaws.com/role-arn: arn:aws:iam::683994254048:role/ivari-sandbox-eks-thanos    
 
   # Service for thanos service discovery on sidecar
   # Enable this can make Thanos Query can use
@@ -3199,6 +3199,9 @@ thanosRuler:
 
 secret_config_filename: thanos-storage-config.yaml
 secret_config_name: thanos-storage-config
-bucket: "ivari-valero-testing01"
-endpoint: "s3.ca-central-1.amazonaws.com"
-region: "ca-central-1"
+# bucket: "ivari-valero-testing01"
+# endpoint: "s3.ca-central-1.amazonaws.com"
+# region: "ca-central-1"
+bucket: "thanos-metrics-s3-storage"
+endpoint: "s3.ap-south-1.amazonaws.com"
+region: "ap-south-1"
