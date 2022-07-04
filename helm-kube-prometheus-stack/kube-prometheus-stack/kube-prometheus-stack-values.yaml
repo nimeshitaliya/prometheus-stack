@@ -1,7 +1,10 @@
 prometheus:
   serviceAccount:
     create: false
+    # create: true
     name: prometheus-prometheus-oper-prometheus
+    # annotations: 
+    #   eks.amazonaws.com/role-arn: arn:aws:iam::683994254048:role/ivari-sandbox-eks-thanos
   prometheusSpec:
     thanos:
       baseImage: quay.io/thanos/thanos
@@ -13,3 +16,27 @@ grafana:
   adminPassword: "EKS!sAWSome"
   service:
     type: LoadBalancer
+    # type: NodePort
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: alb
+      alb.ingress.kubernetes.io/scheme: internal
+      alb.ingress.kubernetes.io/group.name: ivari-ingress-devops
+      alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ca-central-1:683994254048:certificate/05bccf1e-5a36-422d-8655-d4d3d5c5a139"
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+      alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+    hosts:
+      - grafana-sandbox.lifebps-iva-sandbox-cloud.net
+    isStable: true
+
+thanosObjectStorageConfigSecret:
+  create: true
+  name: thanos-storage-config
+  secretConfigFilename: thanos-storage-config.yaml
+  type: s3
+  config:
+    bucket: thanos-metrics-s3-storage
+    endpoint: s3.ap-south-1.amazonaws.com
+    region: ap-south-1
+    part_size: 1024
