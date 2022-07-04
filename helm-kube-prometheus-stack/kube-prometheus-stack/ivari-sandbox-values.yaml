@@ -3,7 +3,7 @@ prometheus:
     create: false
     # create: true
     name: prometheus-prometheus-oper-prometheus
-    # annotations: 
+    # annotations:
     #   eks.amazonaws.com/role-arn: arn:aws:iam::683994254048:role/ivari-sandbox-eks-thanos
   prometheusSpec:
     thanos:
