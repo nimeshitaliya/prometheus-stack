@@ -4,9 +4,9 @@ kind: Ingress
 metadata:
   name: {{ .Values.ingress.name }}
   namespace: {{ template "kube-thanos-stack.namespace" . }}
-  {{- if .Values.prometheus.ingress.annotations }}
+  {{- if .Values.ingress.annotations }}
   annotations:
-  {{ toYaml .Values.prometheus.ingress.annotations | indent 4 }}
+  {{ toYaml .Values.ingress.annotations | indent 4 }}
   {{- end }}
   labels:
     app: {{ .Values.ingress.name }}
