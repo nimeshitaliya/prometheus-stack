@@ -1,4 +1,4 @@
-{{- if and (.Values.ingress.enabled) (.Values.ingress.service.enabled) -}}
+{{- if .Values.ingress.service.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -10,7 +10,7 @@ metadata:
   name: {{ .Values.ingress.service.name }}
   namespace: {{ template "kube-thanos-stack.namespace" . }}
 spec:
-  type: {{ .Values.service.type }}  
+  type: {{ .Values.ingress.service.type }}  
   ports:
   - name: http
     port: 9090
@@ -20,4 +20,4 @@ spec:
     app.kubernetes.io/component: query-layer
     app.kubernetes.io/instance: thanos-query
     app.kubernetes.io/name: thanos-query
-{{- end -}}
+{{- end }}
