@@ -1,0 +1,15 @@
+prometheus:
+  serviceAccount:
+    create: false
+    name: prometheus-prometheus-oper-prometheus
+  prometheusSpec:
+    thanos:
+      baseImage: quay.io/thanos/thanos
+      version: v0.26.0
+      objectStorageConfig:
+        key: thanos-storage-config.yaml
+        name: thanos-storage-config
+grafana:
+  adminPassword: "EKS!sAWSome"
+  service:
+    type: LoadBalancer
