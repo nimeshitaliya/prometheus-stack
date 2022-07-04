@@ -4,10 +4,10 @@ kind: Ingress
 metadata:
   name: {{ .Values.ingress.name }}
   namespace: {{ template "kube-thanos-stack.namespace" . }}
-  {{- if .Values.ingress.annotations }}
+{{- if .Values.ingress.annotations }}
   annotations:
-  {{ toYaml .Values.ingress.annotations | indent 4 }}
-  {{- end }}
+{{ toYaml .Values.ingress.annotations | indent 4 }}
+{{- end }}
   labels:
     app: {{ .Values.ingress.name }}
     app.kubernetes.io/name: {{ .Values.ingress.name }}
