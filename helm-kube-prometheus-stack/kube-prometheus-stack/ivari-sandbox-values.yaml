@@ -39,4 +39,3 @@ thanosObjectStorageConfigSecret:
     bucket: thanos-metrics-s3-storage
     endpoint: s3.ap-south-1.amazonaws.com
     region: ap-south-1
-    part_size: 1024
