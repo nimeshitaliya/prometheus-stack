@@ -1,0 +1,23 @@
+{{- if .Values.ingress.service.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: query-layer
+    app.kubernetes.io/instance: thanos-query
+    app.kubernetes.io/name: thanos-query
+    app.kubernetes.io/version: v0.24.0
+  name: {{ .Values.ingress.service.name }}
+  namespace: {{ template "kube-thanos-stack.namespace" . }}
+spec:
+  type: {{ .Values.ingress.service.type }}  
+  ports:
+  - name: http
+    port: 9090
+    targetPort: 9090
+    nodePort: 30010
+  selector:
+    app.kubernetes.io/component: query-layer
+    app.kubernetes.io/instance: thanos-query
+    app.kubernetes.io/name: thanos-query
+{{- end }}
