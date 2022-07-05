@@ -30,6 +30,69 @@ grafana:
       - grafana-sandbox.lifebps-iva-sandbox-cloud.net
     isStable: true
 
+alertmanager:
+  service:
+    type: LoadBalancer
+    # type: NodePort
+  ingress:
+    enabled: false
+    annotations:
+      kubernetes.io/ingress.class: alb
+      alb.ingress.kubernetes.io/scheme: internal
+      alb.ingress.kubernetes.io/group.name: ivari-ingress-devops
+      alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ca-central-1:683994254048:certificate/05bccf1e-5a36-422d-8655-d4d3d5c5a139"
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+      alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+    hosts:
+      - grafana-sandbox.lifebps-iva-sandbox-cloud.net
+    isStable: true
+  config:
+    global:
+      resolve_timeout: 1m
+    inhibit_rules:
+      - source_matchers:
+          - 'severity = critical'
+        target_matchers:
+          - 'severity =~ warning|info'
+        equal:
+          - 'namespace'
+          - 'alertname'
+      - source_matchers:
+          - 'severity = warning'
+        target_matchers:
+          - 'severity = info'
+        equal:
+          - 'namespace'
+          - 'alertname'
+      - source_matchers:
+          - 'alertname = InfoInhibitor'
+        target_matchers:
+          - 'severity = info'
+        equal:
+          - 'namespace'
+    route:
+      group_by: ['namespace']
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 12h
+      receiver: 'gmail-notifications'
+      routes:
+      - receiver: 'gmail-notifications'
+        matchers:
+          - alertname =~ "InfoInhibitor|Watchdog"
+    receivers:
+    - name: 'gmail-notifications'
+      email_configs:
+      - to: xxxxx@gmail.com
+        from: xxxxx@gmail.com
+        smarthost: smtp.gmail.com:587
+        auth_username: xxxxx@gmail.com
+        auth_identity: xxxxx@gmail.com
+        auth_password: xxxxxxxxxxxxx
+        send_resolved: true
+    templates:
+    - '/etc/alertmanager/config/*.tmpl'
+
 thanosObjectStorageConfigSecret:
   create: true
   name: thanos-storage-config

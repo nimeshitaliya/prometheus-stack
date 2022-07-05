@@ -1,7 +1,7 @@
 namespaceOverride: ""
 
 ingress:
-  enabled: true
+  enabled: false
   name: "private-ingress-thanos"
   annotations:
     kubernetes.io/ingress.class: alb
