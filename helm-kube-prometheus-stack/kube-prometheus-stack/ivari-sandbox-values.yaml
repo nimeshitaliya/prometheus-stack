@@ -76,13 +76,13 @@ alertmanager:
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 12h
-      receiver: 'gmail-notifications'
+      receiver: 'email-notifications'
       routes:
-      - receiver: 'gmail-notifications'
+      - receiver: 'email-notifications'
         matchers:
           - alertname =~ "InfoInhibitor|Watchdog"
     receivers:
-    - name: 'gmail-notifications'
+    - name: 'email-notifications'
       email_configs:
       - to: xxxxxxxxxxx@gmail.com
         from: xxxxxxxxxxx@gmail.com
