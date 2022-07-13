@@ -120,5 +120,6 @@
 falco:
   grpc:
     enabled: true
+    # unixSocketPath: ""
   grpcOutput:
     enabled: true

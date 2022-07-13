@@ -6,6 +6,7 @@ prometheus:
     # annotations:
     #   eks.amazonaws.com/role-arn: arn:aws:iam::683994254048:role/ivari-sandbox-eks-thanos
   prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
     thanos:
       baseImage: quay.io/thanos/thanos
       version: v0.26.0
